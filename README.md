@@ -88,11 +88,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 | A     | 8      |
 | B+    | 7      |
 | B     | 6      |
-| C+    | 5      |
-| C     | 4      |
-| D+    | 3      |
-| D     | 2      |
-| E     | 1      |
+| C     | 5      |
+| P     | 4      |
 | F     | 0      |
 
 ## 📐 Calculation Formula

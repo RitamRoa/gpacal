@@ -43,11 +43,8 @@ export const gradeScale: Record<string, number> = {
   'A': 8,
   'B+': 7,
   'B': 6,
-  'C+': 5,
-  'C': 4,
-  'D+': 3,
-  'D': 2,
-  'E': 1,
+  'C': 5,
+  'P': 4,
   'F': 0
 };
 
