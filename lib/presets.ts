@@ -47,14 +47,14 @@ export const semesterPresets: SemesterPreset[] = [
     academicYear: '2025-2026',
     subjects: [
       { courseName: 'CS2000-DESIGN AND ANALYSIS OF ALGORITHMS', credits: 4 },
-      { courseName: 'CS2401-Understanding and Mitigating Cyber Frauds', credits: 2 },
+      { courseName: 'CS2401-Understanding and Mitigating Cyber Frauds (Elective)', credits: 2 },
       { courseName: 'GN1001-Environment Education', credits: 2 },
       { courseName: 'CS2806-CALCULUS', credits: 2 },
       { courseName: 'CS2403-COMPUTER NETWORKS', credits: 3 },
       { courseName: 'CS2404-INTERNET OF THINGS', credits: 3 },
-      { courseName: 'CS2227-AI AND ML', credits: 3 },
-      { courseName: 'CS2912-START UP PRACTICUM 1', credits: 3 },
-      { courseName: 'CS2911-CONCEPTS OF INCUBATION & ENTREPRENEURSHIP', credits: 3 },
+      { courseName: 'CS2227-AI AND ML (Major)', credits: 3 },
+      { courseName: 'CS2912-START UP PRACTICUM 1 (Minor 1)', credits: 3 },
+      { courseName: 'CS2911-CONCEPTS OF INCUBATION & ENTREPRENEURSHIP (Minor 2)', credits: 3 },
     ],
   },
 ];
