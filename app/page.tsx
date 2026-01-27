@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Calculator, BookMarked, Sparkles } from 'lucide-react';
 import SubjectRow from '@/components/SubjectRow';
 import ResultsCard from '@/components/ResultsCard';
+import PresetSelector from '@/components/PresetSelector';
 import { gradeScale, db, Subject as SubjectType } from '@/lib/db';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { SemesterPreset } from '@/lib/presets';
 
 interface SubjectInput {
   id: string;
@@ -143,6 +145,25 @@ export default function HomePage() {
     }
   };
 
+  const loadPreset = (preset: SemesterPreset) => {
+    setSemesterName(`${preset.name} - ${preset.academicYear}`);
+    setSubjects(
+      preset.subjects.map((subject, index) => ({
+        id: `preset-${index}-${Date.now()}`,
+        courseName: subject.courseName,
+        credits: subject.credits,
+        grade: '',
+      }))
+    );
+    setResults(null);
+    setCurrentSemesterId(null);
+    
+    // Scroll to subjects section
+    setTimeout(() => {
+      document.getElementById('subjects-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Animated Background */}
@@ -207,11 +228,15 @@ export default function HomePage() {
           </motion.div>
         )}
 
+        {/* Preset Templates */}
+        <PresetSelector onSelectPreset={loadPreset} />
+
         {/* Semester Name Input */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="mb-6"
+          id="subjects-section"
         >
           <label className="block mb-2 font-display font-semibold text-gray-700 dark:text-gray-200">
             Semester Name (Optional)
