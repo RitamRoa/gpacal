@@ -1,21 +1,103 @@
 # 🎓 SGPA Calculator
 
-A modern, responsive web application for calculating Semester Grade Point Average (SGPA) using the 10-point grading scale. Built with Next.js 15, TypeScript, Tailwind CSS, and IndexedDB for persistent local storage.
+A modern, responsive web application for calculating Semester Grade Point Average (SGPA) using the 10-point grading scale. Built with Next.js 16, TypeScript, Tailwind CSS 4, and IndexedDB for persistent local storage.
 
-![SGPA Calculator](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![SGPA Calculator](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwind-css)
 
 ## ✨ Features
 
-- **Dynamic Subject Management**: Add and remove subjects on the fly
+- **Dynamic Subject Management**: Add and remove subjects on the fly with labeled inputs
 - **10-Point Grading Scale**: Supports O (10) to F (0) grading system
 - **Real-time Calculation**: Instant SGPA calculation with quality points breakdown
 - **Persistent Storage**: Save multiple semesters using IndexedDB (Dexie.js)
-- **Beautiful UI**: Modern design with smooth animations using Framer Motion
+- **Beautiful UI**: Modern design with animated gradient backgrounds and smooth transitions
 - **Dark Mode**: Automatic dark mode support
-- **Responsive Design**: Works perfectly on mobile, tablet, and desktop
-- **Offline Capable**: All data stored locally in your browser
+- **Mobile-First Design**: Fully responsive with column headers on desktop, labeled fields on mobile
+- **Offline Capable**: All data stored locally in your browser - works without internet!
+
+## 🚀 Deployment to GitHub Pages
+
+This app is configured for static export and can be deployed to GitHub Pages:
+
+### 1. Build the static site
+
+```bash
+pnpm build
+```
+
+This creates an `out/` folder with your static site.
+
+### 2. Deploy to GitHub Pages
+
+**Option A: Using GitHub Actions (Recommended)**
+
+Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
+```
+
+Then enable GitHub Pages in your repo settings (Settings → Pages → Source: GitHub Actions).
+
+**Option B: Manual Deploy**
+
+```bash
+# Install gh-pages
+pnpm add -D gh-pages
+
+# Add to package.json scripts:
+# "deploy": "gh-pages -d out"
+
+# Deploy
+pnpm deploy
+```
+
+### 3. Custom Domain (Optional)
+
+If deploying to `username.github.io/gpacal`, update `next.config.ts`:
+
+```typescript
+basePath: '/gpacal',
+```
 
 ## 🎨 Design
 

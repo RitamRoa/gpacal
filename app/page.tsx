@@ -144,8 +144,22 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/30 to-emerald-50/40 dark:from-rv-navy dark:via-slate-900 dark:to-emerald-950">
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-teal-50/50 to-green-100/30 dark:from-slate-950 dark:via-emerald-950/50 dark:to-teal-950/30" />
+        
+        {/* Animated blobs */}
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-rv-green/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+        <div className="absolute top-0 -right-4 w-72 h-72 bg-rv-green-light/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-rv-green-accent/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 relative">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -156,7 +170,7 @@ export default function HomePage() {
             <div className="p-3 bg-gradient-to-br from-rv-green to-rv-green-light rounded-2xl shadow-lg">
               <Calculator className="text-white" size={36} />
             </div>
-            <h1 className="text-5xl md:text-6xl font-display font-black bg-gradient-to-r from-rv-green via-rv-green-light to-rv-green-accent bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-display font-black bg-gradient-to-r from-rv-green via-rv-green-light to-rv-green-accent bg-clip-text text-transparent drop-shadow-sm">
               SGPA Calculator
             </h1>
           </div>
@@ -171,7 +185,7 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-8 p-6 bg-white dark:bg-rv-navy/40 rounded-2xl shadow-lg border border-rv-green-accent/20"
+            className="mb-8 p-6 bg-white/80 dark:bg-rv-navy/40 backdrop-blur-sm rounded-2xl shadow-xl border border-rv-green-accent/20"
           >
             <div className="flex items-center gap-2 mb-4">
               <BookMarked size={20} className="text-rv-green" />
@@ -224,6 +238,22 @@ export default function HomePage() {
             <span className="text-sm text-gray-500 dark:text-gray-400 font-body">
               {subjects.length} subject{subjects.length !== 1 ? 's' : ''}
             </span>
+          </div>
+
+          {/* Column Headers */}
+          <div className="hidden md:grid grid-cols-[1fr_auto_auto_auto] gap-4 items-center px-4 py-3 mb-2 bg-gradient-to-r from-rv-green/10 via-rv-green-light/10 to-rv-green-accent/10 rounded-xl border border-rv-green-accent/30">
+            <div className="font-display font-bold text-sm text-rv-green uppercase tracking-wide">
+              Course Name
+            </div>
+            <div className="w-24 font-display font-bold text-sm text-rv-green uppercase tracking-wide text-center">
+              Credits
+            </div>
+            <div className="w-24 font-display font-bold text-sm text-rv-green uppercase tracking-wide text-center">
+              Grade
+            </div>
+            <div className="w-[42px] font-display font-bold text-sm text-rv-green uppercase tracking-wide text-center">
+              Action
+            </div>
           </div>
 
           <AnimatePresence>
@@ -293,7 +323,7 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mt-12 p-6 bg-white dark:bg-rv-navy/40 rounded-2xl shadow-lg border border-rv-green-accent/20"
+          className="mt-12 p-6 bg-white/80 dark:bg-rv-navy/40 backdrop-blur-sm rounded-2xl shadow-xl border border-rv-green-accent/20"
         >
           <h3 className="font-display font-bold text-xl mb-4 text-gray-800 dark:text-gray-100">
             Grading Scale Reference
