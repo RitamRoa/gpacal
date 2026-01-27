@@ -21,77 +21,30 @@ A modern, responsive web application for calculating Semester Grade Point Averag
 
 This app is configured for static export and can be deployed to GitHub Pages:
 
-### 1. Build the static site
+### 1. Push to GitHub
 
 ```bash
-pnpm build
+git add .
+git commit -m "Ready for deployment"
+git push origin main
 ```
 
-This creates an `out/` folder with your static site.
+### 2. Enable GitHub Pages
 
-### 2. Deploy to GitHub Pages
+1. Go to your repository on GitHub
+2. Click **Settings** → **Pages**
+3. Under **Source**, select: **GitHub Actions**
 
-**Option A: Using GitHub Actions (Recommended)**
+### 3. Automatic Deployment
 
-Create `.github/workflows/deploy.yml`:
+The GitHub Action (already created in `.github/workflows/deploy.yml`) will automatically:
+- Install dependencies with pnpm
+- Build your Next.js app
+- Deploy to GitHub Pages
 
-```yaml
-name: Deploy to GitHub Pages
+**Your site will be live at:** `https://yourusername.github.io/gpacal/`
 
-on:
-  push:
-    branches: [main]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
-```
-
-Then enable GitHub Pages in your repo settings (Settings → Pages → Source: GitHub Actions).
-
-**Option B: Manual Deploy**
-
-```bash
-# Install gh-pages
-pnpm add -D gh-pages
-
-# Add to package.json scripts:
-# "deploy": "gh-pages -d out"
-
-# Deploy
-pnpm deploy
-```
-
-### 3. Custom Domain (Optional)
+### 4. Custom Domain (Optional)
 
 If deploying to `username.github.io/gpacal`, update `next.config.ts`:
 
