@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description: "Calculate your Semester Grade Point Average using the 10-point grading scale. Track multiple semesters, save your data locally, and monitor your academic performance.",
   keywords: ["SGPA", "GPA Calculator", "Grade Calculator", "Academic Performance", "Student Tools", "GPACal"],
   icons: {
-    icon: '/logo.svg',
-    apple: '/logo.svg',
+    icon: '/gpacal/logo.svg',
+    apple: '/gpacal/logo.svg',
   },
 };
 
