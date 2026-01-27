@@ -1,85 +1,75 @@
-# 🎓 SGPA Calculator
+# SGPA Calculator
 
-A modern, responsive web application for calculating Semester Grade Point Average (SGPA) using the 10-point grading scale. Built with Next.js 16, TypeScript, Tailwind CSS 4, and IndexedDB for persistent local storage.
+A modern, responsive web application for calculating Semester Grade Point Average (SGPA) using the 10-point grading scale. Built with Next.js 16, TypeScript, Tailwind CSS 4, and IndexedDB for offline-first data persistence.
 
-![SGPA Calculator](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-## ✨ Features
+## Overview
 
-- **Dynamic Subject Management**: Add and remove subjects on the fly with labeled inputs
-- **10-Point Grading Scale**: Supports O (10) to F (0) grading system
-- **Real-time Calculation**: Instant SGPA calculation with quality points breakdown
-- **Persistent Storage**: Save multiple semesters using IndexedDB (Dexie.js)
-- **Beautiful UI**: Modern design with animated gradient backgrounds and smooth transitions
-- **Dark Mode**: Automatic dark mode support
-- **Mobile-First Design**: Fully responsive with column headers on desktop, labeled fields on mobile
-- **Offline Capable**: All data stored locally in your browser - works without internet!
+SGPA Calculator is a client-side web application designed to help students calculate their Semester Grade Point Average efficiently. The application features local data persistence through IndexedDB, allowing users to save and manage multiple semesters without requiring a backend server. All calculations are performed in real-time with a focus on user experience and accessibility.
 
-## 🚀 Deployment to GitHub Pages
+## Features
 
-This app is configured for static export and can be deployed to GitHub Pages:
+- **Dynamic Subject Management** - Add, edit, and remove subjects with real-time validation
+- **10-Point Grading System** - Full support for O, A+, A, B+, B, C, P, and F grades
+- **Semester Templates** - Pre-configured templates for quick data entry
+- **Persistent Storage** - IndexedDB integration for offline data storage
+- **Responsive Design** - Mobile-first approach with adaptive layouts
+- **Dark Mode Support** - Automatic theme detection and switching
+- **Real-time Calculation** - Instant SGPA computation with quality points breakdown
+- **Export Capability** - Static site generation for deployment on any hosting platform
 
-### 1. Push to GitHub
+## Technical Stack
 
-```bash
-git add .
-git commit -m "Ready for deployment"
-git push origin main
-```
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4
+- **State Management**: React Hooks
+- **Database**: IndexedDB with Dexie.js
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Package Manager**: pnpm
 
-### 2. Enable GitHub Pages
-
-1. Go to your repository on GitHub
-2. Click **Settings** → **Pages**
-3. Under **Source**, select: **GitHub Actions**
-
-### 3. Automatic Deployment
-
-The GitHub Action (already created in `.github/workflows/deploy.yml`) will automatically:
-- Install dependencies with pnpm
-- Build your Next.js app
-- Deploy to GitHub Pages
-
-**Your site will be live at:** `https://yourusername.github.io/gpacal/`
-
-### 4. Custom Domain (Optional)
-
-If deploying to `username.github.io/gpacal`, update `next.config.ts`:
-
-```typescript
-basePath: '/gpacal',
-```
-
-## 🎨 Design
-
-The app uses the RV University color palette:
-- **Primary Green**: Professional green tones for a fresh, academic feel
-- **Gold Accents**: Subtle gold highlights from the university branding
-- **Navy Dark Mode**: Sophisticated dark navy background
-- **Custom Typography**: Outfit for headings, Space Grotesk for body text
-
-## 🚀 Getting Started
+## Installation
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 18 or higher
 - pnpm (recommended) or npm
 
-### Installation
+### Setup
 
-\`\`\`bash
-# Install dependencies
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/yourusername/gpacal.git
+cd gpacal
 pnpm install
+```
 
-# Run development server
+### Development
+
+Start the development server:
+
+```bash
 pnpm dev
-\`\`\`
+```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
+The application will be available at `http://localhost:3000`.
 
-## 📊 Grading Scale
+### Production Build
+
+Generate a production build:
+
+```bash
+pnpm build
+pnpm start
+```
+
+## Grading Scale
 
 | Grade | Points |
 |-------|--------|
@@ -92,33 +82,80 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 | P     | 4      |
 | F     | 0      |
 
-## 📐 Calculation Formula
+The application implements the standard 10-point grading system where SGPA is calculated using the weighted average formula.
 
-The SGPA is calculated using the weighted average method:
+## Calculation Methodology
 
+The SGPA is computed using the following formula:
+
+```
 SGPA = (Sum of Quality Points) / (Sum of Credits)
 
-For each subject: Quality Points = Credits × Grade Value
+Where: Quality Points = Credits × Grade Value
+```
 
-## 🛠️ Tech Stack
+## Deployment
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **Database**: IndexedDB with Dexie.js
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Package Manager**: pnpm
+This project is configured for static site generation and can be deployed to any hosting platform that supports static files.
 
-## 🎯 Usage
+### GitHub Pages
 
-1. **Add Subjects**: Click "Add Subject" to create new subject rows
-2. **Enter Details**: Fill in course name, credits, and select grade
-3. **Name Semester** (Optional): Give your semester a name for easy tracking
-4. **Calculate**: Click "Calculate SGPA" to see your results
-5. **Save**: Named semesters are automatically saved to IndexedDB
-6. **Load**: Click on any previous semester to view/edit it
+The repository includes a GitHub Actions workflow for automatic deployment:
 
-## 📝 License
+1. Enable GitHub Pages in repository Settings > Pages
+2. Set Source to "GitHub Actions"
+3. Push changes to the main branch
+4. The workflow will automatically build and deploy
 
-MIT
+The site will be available at `https://username.github.io/gpacal/`
+
+### Other Platforms
+
+The static build can be deployed to Vercel, Netlify, Cloudflare Pages, or any static hosting service:
+
+```bash
+pnpm build
+# Deploy the 'out' directory
+```
+
+## Contributing
+
+Contributions are welcome and appreciated. To contribute:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/improvement`)
+3. **Commit your changes** (`git commit -am 'Add new feature'`)
+4. **Push to the branch** (`git push origin feature/improvement`)
+5. **Open a Pull Request**
+
+### Reporting Issues
+
+If you encounter any bugs or have feature requests:
+
+1. Check if the issue already exists in the [Issues](https://github.com/yourusername/gpacal/issues) section
+2. If not, create a new issue with:
+   - Clear title and description
+   - Steps to reproduce (for bugs)
+   - Expected vs actual behavior
+   - Screenshots if applicable
+   - Environment details (browser, OS)
+
+### Development Guidelines
+
+- Follow the existing code style and conventions
+- Write clear, descriptive commit messages
+- Update documentation for any new features
+- Ensure the build passes before submitting PR (`pnpm build`)
+- Test on multiple devices and browsers when possible
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+Designed for RV University students and adaptable for any institution using the 10-point grading scale.
+
+---
+
+**Note**: This is a client-side application. All data is stored locally in the browser using IndexedDB. Data will not sync across devices or browsers.
