@@ -187,12 +187,14 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-br from-rv-green to-rv-green-light rounded-2xl shadow-lg">
-              <Calculator className="text-white" size={36} />
-            </div>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img 
+              src="/logo.svg" 
+              alt="GPACal Logo" 
+              className="w-16 h-16 md:w-20 md:h-20"
+            />
             <h1 className="text-5xl md:text-6xl font-display font-black bg-gradient-to-r from-rv-green via-rv-green-light to-rv-green-accent bg-clip-text text-transparent drop-shadow-sm">
-              SGPA Calculator
+              GPACal
             </h1>
           </div>
           <p className="text-lg text-gray-600 dark:text-gray-300 font-body max-w-2xl mx-auto">

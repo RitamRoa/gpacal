@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SGPA Calculator - Track Your Academic Progress",
+  title: "GPACal - SGPA Calculator",
   description: "Calculate your Semester Grade Point Average using the 10-point grading scale. Track multiple semesters, save your data locally, and monitor your academic performance.",
-  keywords: ["SGPA", "GPA Calculator", "Grade Calculator", "Academic Performance", "Student Tools"],
+  keywords: ["SGPA", "GPA Calculator", "Grade Calculator", "Academic Performance", "Student Tools", "GPACal"],
+  icons: {
+    icon: '/logo.svg',
+    apple: '/logo.svg',
+  },
 };
 
 export default function RootLayout({
