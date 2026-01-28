@@ -2,6 +2,7 @@
 
 import { gradeOptions } from '@/lib/db';
 import { Trash2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface SubjectRowProps {
   id: string;
@@ -21,7 +22,14 @@ export default function SubjectRow({
   onRemove,
 }: SubjectRowProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-3 md:gap-4 items-start md:items-center p-4 bg-white/70 dark:bg-rv-navy/20 backdrop-blur-sm rounded-xl border border-rv-green-accent/20 hover:border-rv-green-light/40 transition-all duration-200 shadow-sm hover:shadow-lg">
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+      className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-3 md:gap-4 items-start md:items-center p-4 bg-white/70 dark:bg-rv-navy/20 backdrop-blur-sm rounded-xl border border-rv-green-accent/20 hover:border-rv-green-light/40 shadow-sm hover:shadow-lg"
+    >
       {/* Course Name */}
       <div className="space-y-1">
         <label className="block md:hidden text-xs font-display font-semibold text-rv-green uppercase tracking-wide">
@@ -76,14 +84,16 @@ export default function SubjectRow({
       </div>
       
       {/* Remove Button */}
-      <button
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() => onRemove(id)}
-        className="w-full md:w-auto p-2.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 font-display font-semibold text-sm"
+        className="w-full md:w-auto p-2.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 transition-colors duration-200 flex items-center justify-center gap-2 font-display font-semibold text-sm"
         aria-label="Remove subject"
       >
         <Trash2 size={18} />
         <span className="md:hidden">Remove</span>
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }

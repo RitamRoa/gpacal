@@ -1,10 +1,23 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect } from 'react';
 import { Award, BookOpen, TrendingUp, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { gradeScale } from '@/lib/db';
+
+const AnimatedCounter = ({ value, toFixed = 2 }: { value: number; toFixed?: number }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => latest.toFixed(toFixed));
+
+  useEffect(() => {
+    const controls = animate(count, value, { duration: 1.5, ease: "circOut" });
+    return controls.stop;
+  }, [value, count]);
+
+  return <motion.span>{rounded}</motion.span>;
+};
 
 interface SubjectData {
   courseName: string;
@@ -145,7 +158,7 @@ export default function ResultsCard({
             <span className="text-sm font-body text-white/80">SGPA</span>
           </div>
           <div className={`text-5xl font-display font-black ${getGradeColor(sgpa)}`}>
-            {sgpa.toFixed(2)}
+            <AnimatedCounter value={sgpa} />
           </div>
           <div className="mt-2 text-xs text-white/60">Out of 10.00</div>
         </motion.div>
@@ -161,7 +174,7 @@ export default function ResultsCard({
             <span className="text-sm font-body text-white/80">Total Credits</span>
           </div>
           <div className="text-4xl font-display font-bold">
-            {totalCredits.toFixed(1)}
+            <AnimatedCounter value={totalCredits} toFixed={1} />
           </div>
           <div className="mt-2 text-xs text-white/60">Credits Earned</div>
         </motion.div>
@@ -177,7 +190,7 @@ export default function ResultsCard({
             <span className="text-sm font-body text-white/80">Quality Points</span>
           </div>
           <div className="text-4xl font-display font-bold">
-            {totalQualityPoints.toFixed(2)}
+            <AnimatedCounter value={totalQualityPoints} />
           </div>
           <div className="mt-2 text-xs text-white/60">Total QP Earned</div>
         </motion.div>

@@ -81,6 +81,11 @@ export default function HomePage() {
       totalQualityPoints,
     });
 
+    // Scroll to results
+    setTimeout(() => {
+      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+
     // Save to IndexedDB with a default name if not present
     // Or we can just use a timestamp if the user can't name it anymore
     const nameToSave = semesterName.trim() || `Semester - ${new Date().toLocaleDateString()}`;
@@ -288,21 +293,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <AnimatePresence>
-            {subjects.map((subject, index) => (
-              <motion.div
+          <AnimatePresence mode="popLayout">
+            {subjects.map((subject) => (
+              <SubjectRow
                 key={subject.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <SubjectRow
-                  {...subject}
-                  onUpdate={updateSubject}
-                  onRemove={removeSubject}
-                />
-              </motion.div>
+                {...subject}
+                onUpdate={updateSubject}
+                onRemove={removeSubject}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
