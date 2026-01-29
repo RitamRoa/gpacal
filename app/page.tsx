@@ -81,10 +81,18 @@ export default function HomePage() {
       totalQualityPoints,
     });
 
-    // Save to IndexedDB
-    if (semesterName.trim()) {
+    // Scroll to results
+    setTimeout(() => {
+      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+
+    // Save to IndexedDB with a default name if not present
+    // Or we can just use a timestamp if the user can't name it anymore
+    const nameToSave = semesterName.trim() || `Semester - ${new Date().toLocaleDateString()}`;
+
+    if (nameToSave) {
       const semId = await db.semesters.add({
-        name: semesterName.trim(),
+        name: nameToSave,
         sgpa,
         totalCredits,
         totalQualityPoints,
@@ -201,6 +209,29 @@ export default function HomePage() {
           </p>
         </motion.div>
 
+        {/* Grade Scale Reference */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-8 p-6 bg-white/80 dark:bg-rv-navy/40 backdrop-blur-sm rounded-2xl shadow-xl border border-rv-green-accent/20"
+        >
+          <h3 className="font-display font-bold text-xl mb-4 text-gray-800 dark:text-gray-100">
+            Grading Scale Reference
+          </h3>
+          <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-3">
+            {Object.entries(gradeScale).map(([grade, value]) => (
+              <div
+                key={grade}
+                className="p-3 bg-gradient-to-br from-rv-green-accent/10 to-rv-green-light/10 rounded-lg text-center border border-rv-green-accent/20"
+              >
+                <div className="font-display font-bold text-lg text-rv-green">{grade}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">{value}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Saved Semesters */}
         {semesters && semesters.length > 0 && (
           <motion.div
@@ -230,25 +261,6 @@ export default function HomePage() {
 
         {/* Preset Templates */}
         <PresetSelector onSelectPreset={loadPreset} />
-
-        {/* Semester Name Input */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-6"
-          id="subjects-section"
-        >
-          <label className="block mb-2 font-display font-semibold text-gray-700 dark:text-gray-200">
-            Semester Name (Optional)
-          </label>
-          <input
-            type="text"
-            value={semesterName}
-            onChange={(e) => setSemesterName(e.target.value)}
-            placeholder="e.g., Semester 5 - Fall 2026"
-            className="w-full px-5 py-3 rounded-xl border border-rv-green-accent/30 focus:border-rv-green focus:ring-2 focus:ring-rv-green/20 outline-none bg-white dark:bg-rv-navy/50 font-body text-lg transition-all"
-          />
-        </motion.div>
 
         {/* Subjects Input */}
         <motion.div
@@ -281,21 +293,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <AnimatePresence>
-            {subjects.map((subject, index) => (
-              <motion.div
+          <AnimatePresence mode="popLayout">
+            {subjects.map((subject) => (
+              <SubjectRow
                 key={subject.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <SubjectRow
-                  {...subject}
-                  onUpdate={updateSubject}
-                  onRemove={removeSubject}
-                />
-              </motion.div>
+                {...subject}
+                onUpdate={updateSubject}
+                onRemove={removeSubject}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -339,32 +344,9 @@ export default function HomePage() {
         {/* Results */}
         {results && (
           <div id="results">
-            <ResultsCard {...results} />
+            <ResultsCard {...results} subjects={subjects} />
           </div>
         )}
-
-        {/* Grade Scale Reference */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-12 p-6 bg-white/80 dark:bg-rv-navy/40 backdrop-blur-sm rounded-2xl shadow-xl border border-rv-green-accent/20"
-        >
-          <h3 className="font-display font-bold text-xl mb-4 text-gray-800 dark:text-gray-100">
-            Grading Scale Reference
-          </h3>
-          <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-3">
-            {Object.entries(gradeScale).map(([grade, value]) => (
-              <div
-                key={grade}
-                className="p-3 bg-gradient-to-br from-rv-green-accent/10 to-rv-green-light/10 rounded-lg text-center border border-rv-green-accent/20"
-              >
-                <div className="font-display font-bold text-lg text-rv-green">{grade}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">{value}</div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </div>
   );
